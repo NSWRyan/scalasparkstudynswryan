@@ -8,7 +8,8 @@ import ryan.widodo.answers.Question3Helper.{countriesChain, longestRunNoZZ}
 
 import java.sql.Date
 
-/** Problem: Given a passenger's travel history, find the longest sequence of countries visited without the ZZ.
+/** Problem: Given a passenger's travel history, find the longest sequence of
+  * countries visited without the ZZ.
   *
   * Solution:
   *   1. First group by passengerId and aggregate from, to, and date info.
@@ -27,7 +28,7 @@ object Question3Spark {
       System.exit(1)
     }
     val teleportFileNameFullPath: String = args(0)
-    val outputDirFullPath: String      = args(1)
+    val outputDirFullPath: String = args(1)
 
     val spark: SparkSession = SparkSession.builder
       .appName("RandomCompanyHWQ3")
@@ -58,7 +59,8 @@ object Question3Spark {
     * @param passengerId
     *   The passengerId in Int
     * @param Teleports
-    *   TeleportLite object containing country from and to and the Teleport date.
+    *   TeleportLite object containing country from and to and the Teleport
+    *   date.
     */
   private case class PassengerTeleports(
       passengerId: Int,
@@ -91,7 +93,7 @@ object Question3Spark {
     // Required for case class encoding for Dataset.
     import spark.implicits._
 
-    val toInt  = udf[Int, String](Utils.parseInt)
+    val toInt = udf[Int, String](Utils.parseInt)
     val toDate = udf[Date, String](Utils.parseDate)
 
     // Load the data

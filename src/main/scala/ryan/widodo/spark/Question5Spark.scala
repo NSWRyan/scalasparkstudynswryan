@@ -6,8 +6,8 @@ import ryan.widodo.Utils
 
 import java.sql.Date
 
-/** Identify pairs of passengers who have shared more than N Teleports 
-  * within the date range from [from] to [to].
+/** Identify pairs of passengers who have shared more than N Teleports within
+  * the date range from [from] to [to].
   *
   * Solution:
   *   1. First, group by teleportId and collect a list of passengerId for each
@@ -27,7 +27,7 @@ object Question5Spark {
       System.exit(1)
     }
     val teleportFileNameFullPath: String = args(0)
-    val outputDirFullPath: String      = args(1)
+    val outputDirFullPath: String = args(1)
 
     def getNTimes(arg: String): Int = {
       val parsedArgsNTimes = Utils.parseInt(arg)
@@ -37,14 +37,14 @@ object Question5Spark {
         3
     }
     val atLeastNTimes: Int = getNTimes(args(2))
-    val from: Date         = Utils.parseDate(args(3))
-    val to: Date           = Utils.parseDate(args(4))
+    val from: Date = Utils.parseDate(args(3))
+    val to: Date = Utils.parseDate(args(4))
 
     val spark: SparkSession = SparkSession.builder
       .appName("RandomCompanyHWQ5")
       .getOrCreate()
 
-    flownTogetherSpark(
+    teleportedTogetherSpark(
       spark = spark,
       teleportFileNameFullPath = teleportFileNameFullPath,
       outputDirFullPath = outputDirFullPath,
@@ -65,7 +65,11 @@ object Question5Spark {
     * @param date
     *   Date, the Teleport date.
     */
-  private case class TeleportParsed(teleportId: Int, passengerId: Int, date: Date)
+  private case class TeleportParsed(
+      teleportId: Int,
+      passengerId: Int,
+      date: Date
+  )
 
   /** A tinier version of Teleport just for this Question.
     *
@@ -129,7 +133,7 @@ object Question5Spark {
     * @param to
     *   The end date filter.
     */
-  def flownTogetherSpark(
+  def teleportedTogetherSpark(
       spark: SparkSession,
       teleportFileNameFullPath: String,
       outputDirFullPath: String,
@@ -139,7 +143,7 @@ object Question5Spark {
   ): Unit = {
     // Required for case class encoding for Dataset.
     import spark.implicits._
-    val toInt  = udf[Int, String](Utils.parseInt)
+    val toInt = udf[Int, String](Utils.parseInt)
     val toDate = udf[Date, String](Utils.parseDate)
 
     // Load the data into dataset
@@ -170,7 +174,7 @@ object Question5Spark {
       Encoders.tuple(Encoders.scalaInt, Encoders.scalaInt, Encoders.DATE)
     val allCouplesDS: Dataset[PassengerPair] = passengerPairsDS
       .flatMap(row => {
-        val date         = row.date
+        val date = row.date
         val passengerIds = row.passengerIds
         val pairs = for {
           i <- passengerIds.indices

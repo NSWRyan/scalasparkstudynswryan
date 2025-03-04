@@ -44,14 +44,14 @@ class Question1Test extends AnyFunSuite with BeforeAndAfter {
 
     // Read the output CSV file and validate the content
     val reader = CSVReader.open(outputPath.toFile)
-    val rows   = reader.all()
+    val rows = reader.all()
 
     // Expected data
     val expectedHeader = List("Month", "Number of Teleports")
     val expectedData = List(
       List("1", "2"), // January
       List("2", "3"), // February
-      List("3", "1")  // March
+      List("3", "1") // March
     )
 
     assert(rows.head == expectedHeader)

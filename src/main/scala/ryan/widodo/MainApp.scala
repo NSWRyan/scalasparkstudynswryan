@@ -34,9 +34,9 @@ object MainApp {
       )
       System.exit(1)
     }
-    val teleportFileName: String    = args(0)
+    val teleportFileName: String = args(0)
     val passengerFileName: String = args(1)
-    val outputDir: String         = args(2)
+    val outputDir: String = args(2)
 
     def getNTimes(arg: String): Int = {
       val parsedArgsNTimes = Utils.parseInt(arg)
@@ -47,8 +47,8 @@ object MainApp {
     }
 
     var atLeastNTimes: Int = 3
-    var q5StartDate: Date  = Utils.parseDate("1997-01-01")
-    var q5EndDate: Date    = Utils.parseDate("1997-12-31")
+    var q5StartDate: Date = Utils.parseDate("1997-01-01")
+    var q5EndDate: Date = Utils.parseDate("1997-12-31")
     if (args.length == 6) {
       atLeastNTimes = getNTimes(args(3))
       q5StartDate = Utils.parseDate(args(4))
@@ -80,7 +80,7 @@ object MainApp {
     println("Question 3 done.")
     Question4.question4(outputDir, Teleports)
     println("Question 4 done.")
-    Question5.flownTogether(
+    Question5.teleportedTogether(
       outputDir,
       Teleports,
       atLeastNTimes,

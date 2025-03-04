@@ -21,7 +21,7 @@ object Question3Helper {
   def countriesChain(Teleports: List[Teleport]): List[String] = {
     if (Teleports.isEmpty) return Nil
     val listCountries: ListBuffer[String] = new ListBuffer[String]()
-    val sortedTeleports                     = Teleports.sortBy(_.date.getTime)
+    val sortedTeleports = Teleports.sortBy(_.date.getTime)
     // Loop the remaining.
     for (Teleport <- sortedTeleports) {
       // If the previous Country the same as current, no need to add.

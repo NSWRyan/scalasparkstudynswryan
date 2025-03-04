@@ -9,7 +9,7 @@ import ryan.widodo.dao.{Teleport, Passenger}
 import java.nio.file.{Files, Paths}
 
 class PassengerDataReaderTest extends AnyFunSuite with BeforeAndAfter {
-  var tempDir: String  = _
+  var tempDir: String = _
   var tempFile: String = _
 
   before {

@@ -4,7 +4,8 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.{Dataset, Encoder, Encoders, SparkSession}
 import ryan.widodo.Utils
 
-/** Problem: Identify pairs of passengers who have shared more than three Teleports.
+/** Problem: Identify pairs of passengers who have shared more than three
+  * Teleports.
   *
   * Solution:
   *   1. First, group by teleportId and collect a list of passengerId for each
@@ -23,7 +24,7 @@ object Question4Spark {
       System.exit(1)
     }
     val teleportFileNameFullPath: String = args(0)
-    val outputDirFullPath: String      = args(1)
+    val outputDirFullPath: String = args(1)
 
     val spark: SparkSession = SparkSession.builder
       .appName("RandomCompanyHWQ4")

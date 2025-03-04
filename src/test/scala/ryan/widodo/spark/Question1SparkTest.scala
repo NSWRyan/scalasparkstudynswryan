@@ -20,9 +20,9 @@ class Question1SparkTest extends AnyFunSuite with DataFrameSuiteBase {
     import spark.implicits._
 
     // Mock input file paths
-    val sparkTestDirBase  = "/tmp/spark_test"
+    val sparkTestDirBase = "/tmp/spark_test"
     val outputDirFullPath = f"${sparkTestDirBase}/tmp/test-output"
-    val outputDirectory   = new Directory(new File(outputDirFullPath))
+    val outputDirectory = new Directory(new File(outputDirFullPath))
     outputDirectory.deleteRecursively()
     val inputFilePath = f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
 

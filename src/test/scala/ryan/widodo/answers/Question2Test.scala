@@ -54,7 +54,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
 
     // Read the output CSV file and validate the content
     val reader = CSVReader.open(outputPath.toFile)
-    val rows   = reader.all()
+    val rows = reader.all()
 
     // Expected data
     val expectedHeader =
@@ -106,7 +106,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
 
     // Read the output CSV file and validate the content
     val reader = CSVReader.open(outputPath.toFile)
-    val rows   = reader.all()
+    val rows = reader.all()
 
     // Expected data
     val expectedHeader =
