@@ -12,17 +12,18 @@ import scala.reflect.io.Directory
 class Question5SparkTest extends AnyFunSuite with DataFrameSuiteBase {
 
   test(
-    "flownTogetherSpark should correctly count passenger pairs who have flown together at least N times within a date range"
+    "teleportedTogetherSpark should correctly count passenger pairs who have teleported together at least N times within a date range"
   ) {
     val spark = sparkSession
 
     import spark.implicits._
 
     // Mock input file paths
-    val sparkTestDirBase       = "/tmp/spark_test"
-    val teleportFileNameFullPath = f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
-    val outputDirFullPath      = f"${sparkTestDirBase}/tmp/test-output"
-    val outputDirectory        = new Directory(new File(sparkTestDirBase))
+    val sparkTestDirBase = "/tmp/spark_test"
+    val teleportFileNameFullPath =
+      f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
+    val outputDirFullPath = f"${sparkTestDirBase}/tmp/test-output"
+    val outputDirectory = new Directory(new File(sparkTestDirBase))
     outputDirectory.deleteRecursively()
 
     // Sample Teleport data
@@ -52,15 +53,15 @@ class Question5SparkTest extends AnyFunSuite with DataFrameSuiteBase {
 
     // Call the function with test data
     val atLeastNTimes = 3
-    val from          = Utils.parseDate("2024-01-01")
-    val to            = Utils.parseDate("2024-01-05")
+    val from = Utils.parseDate("2024-01-01")
+    val to = Utils.parseDate("2024-01-05")
 
     // Save the sample data to CSV (for testing purposes)
     teleportData.write
       .option("header", "true")
       .csv(f"file://$teleportFileNameFullPath")
 
-    Question5Spark.flownTogetherSpark(
+    Question5Spark.teleportedTogetherSpark(
       spark,
       teleportFileNameFullPath = teleportFileNameFullPath,
       outputDirFullPath = outputDirFullPath,

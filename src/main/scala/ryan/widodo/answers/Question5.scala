@@ -7,8 +7,10 @@ import ryan.widodo.dao.Teleport
 
 import java.sql.Date
 
-/** Problem: Identify pairs of passengers who have been on the same Teleport together (same Teleport number and date) more than three times within a specified date range [start date] to [end date]." (Same as question #4 but we need to add
-  * min max on date).
+/** Problem: Identify pairs of passengers who have been on the same Teleport
+  * together (same Teleport number and date) more than three times within a
+  * specified date range [start date] to [end date]." (Same as question #4 but
+  * we need to add min max on date).
   *
   * ==Self question:==
   *   - Do we need to display all possible passengerId permutation?
@@ -47,7 +49,9 @@ object Question5 {
     * @return
     *   TeleportTinyWithDate
     */
-  private def TeleportToTeleportTinyWithDate(Teleport: Teleport): TeleportTinyWithDate = {
+  private def TeleportToTeleportTinyWithDate(
+      Teleport: Teleport
+  ): TeleportTinyWithDate = {
     TeleportTinyWithDate(
       teleportId = Teleport.teleportId,
       passengerId = Teleport.passengerId,
@@ -64,7 +68,7 @@ object Question5 {
     * @param to
     *   The end date for the range inclusive.
     */
-  def flownTogether(
+  def teleportedTogether(
       outputDir: String,
       Teleports: List[Teleport],
       atLeastNTimes: Int,
@@ -113,7 +117,7 @@ object Question5 {
     // Also sort to make the csv readable.
     val pairCountsWithDate: List[(Int, Int, Int, Date, Date)] = groupedPairs
       .map { case ((id1, id2), records) =>
-        val count   = records.size
+        val count = records.size
         val minDate = records.map(_._3).min
         val maxDate = records.map(_._3).max
         (id1, id2, count, minDate, maxDate)

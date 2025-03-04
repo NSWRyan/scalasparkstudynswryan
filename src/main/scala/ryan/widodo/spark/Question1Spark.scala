@@ -19,7 +19,7 @@ object Question1Spark {
       System.exit(1)
     }
     val teleportFileNameFullPath: String = args(0)
-    val outputDirFullPath: String      = args(1)
+    val outputDirFullPath: String = args(1)
 
     val spark: SparkSession = SparkSession.builder
       .appName("RandomCompanyHWQ1")
@@ -70,8 +70,8 @@ object Question1Spark {
     // Required for case class encoding for Dataset.
     import spark.implicits._
 
-    val toInt   = udf[Int, String](Utils.parseInt)
-    val toDate  = udf[Date, String](Utils.parseDate)
+    val toInt = udf[Int, String](Utils.parseInt)
+    val toDate = udf[Date, String](Utils.parseDate)
     val toMonth = udf[Int, Date](Utils.getMonth)
 
     // Load the data and

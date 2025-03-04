@@ -3,8 +3,8 @@ package ryan.widodo.answers
 import com.github.tototoshi.csv.CSVWriter
 import ryan.widodo.dao.{Teleport, Passenger}
 
-/** Problem: List the first and last names of the 100 passengers 
-  * with the highest Teleport frequency.
+/** Problem: List the first and last names of the 100 passengers with the
+  * highest Teleport frequency.
   *
   * Solution:
   *   - Getting the top 100 is quite simple, we just need to join the Teleport
@@ -22,7 +22,9 @@ object Question2 {
     * @return
     *   A map of passengerId and the number of Teleports.
     */
-  private def getPassengerTeleportsCount(Teleports: List[Teleport]): Map[Int, Int] = {
+  private def getPassengerTeleportsCount(
+      Teleports: List[Teleport]
+  ): Map[Int, Int] = {
     Teleports.groupBy(Teleport => Teleport.passengerId).mapValues(_.size)
   }
 
@@ -37,7 +39,9 @@ object Question2 {
       passengers: List[Passenger]
   ): Unit = {
     // First we group by the passengerId and sort it
-    val passengersteleportCount: Map[Int, Int] = getPassengerTeleportsCount(Teleports)
+    val passengersteleportCount: Map[Int, Int] = getPassengerTeleportsCount(
+      Teleports
+    )
 
     // Sort by # of Teleports descending and get top 100
     val sortedPassengerteleportCount: Seq[(Int, Int)] =
@@ -95,12 +99,14 @@ object Question2 {
       passengers: List[Passenger]
   ): Unit = {
     // First we group by the passengerId and sort it
-    val passengersteleportCount: Map[Int, Int] = getPassengerTeleportsCount(Teleports)
+    val passengersteleportCount: Map[Int, Int] = getPassengerTeleportsCount(
+      Teleports
+    )
 
     // Inner join
     val passengersteleportCountFull = for {
       passengersteleportCount <- passengersteleportCount
-      passenger             <- passengers
+      passenger <- passengers
       if passengersteleportCount._1 == passenger.passengerId
     } yield (
       passengersteleportCount._1,
@@ -112,7 +118,9 @@ object Question2 {
     // Sort by # of Teleports descending and get top 100
     val top100Passengers: Seq[(Int, Int, String, String)] =
       passengersteleportCountFull.toSeq
-        .sortBy(passengersTeleport => (-passengersTeleport._2, passengersTeleport._1))
+        .sortBy(passengersTeleport =>
+          (-passengersTeleport._2, passengersTeleport._1)
+        )
         .take(100)
 
     // Write to a new CSV

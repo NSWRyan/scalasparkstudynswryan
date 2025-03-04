@@ -20,9 +20,9 @@ object Question2Spark {
       )
       System.exit(1)
     }
-    val teleportFileNameFullPath: String    = args(0)
+    val teleportFileNameFullPath: String = args(0)
     val passengersDataCSVFullPath: String = args(1)
-    val outputDirFullPath: String         = args(2)
+    val outputDirFullPath: String = args(2)
 
     val spark: SparkSession = SparkSession.builder
       .appName("RandomCompanyHWQ2")
@@ -45,7 +45,10 @@ object Question2Spark {
     * @param numberOfTeleports
     *   BigInt, the number of Teleports for this passengerId.
     */
-  private case class TeleportFrequency(passengerId: Int, numberOfTeleports: BigInt)
+  private case class TeleportFrequency(
+      passengerId: Int,
+      numberOfTeleports: BigInt
+  )
 
   /** Helper case class for Teleport frequency dataset,
     *
@@ -74,8 +77,8 @@ object Question2Spark {
       lastName: String
   )
 
-  /** Spark group by passengerId then count the teleportId. Then we join with the
-    * passengers.csv to fill the passenger data.
+  /** Spark group by passengerId then count the teleportId. Then we join with
+    * the passengers.csv to fill the passenger data.
     * @param spark
     *   The SparkSession
     * @param teleportFileNameFullPath

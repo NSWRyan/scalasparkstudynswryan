@@ -5,3 +5,7 @@
 hs_err_pid*
 
 **/target/*
+.vscode
+.metals
+.bloop
+metals.sbt

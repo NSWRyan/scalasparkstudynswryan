@@ -51,11 +51,11 @@ object Question3 {
     // We do two steps here.
     // First, get the list of visited countries sorted by date.
     // Second, We find the longest subsequence of countries without ZZ.
-    val visitedCountriesByPassenger: Map[Int, Int] = passengersteleportsData.map {
-      case (passengerId, teleportsData) =>
+    val visitedCountriesByPassenger: Map[Int, Int] =
+      passengersteleportsData.map { case (passengerId, teleportsData) =>
         val longestRun = longestRunNoZZ(countriesChain(teleportsData))
         passengerId -> longestRun
-    }
+      }
     // Sort in descending order.
     val visitedCountriesByPassengerSorted =
       visitedCountriesByPassenger.toSeq

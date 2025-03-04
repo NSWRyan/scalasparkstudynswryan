@@ -5,8 +5,8 @@ import ryan.widodo.dao.Teleport
 
 import scala.collection.mutable.ListBuffer
 
-/** Problem: Identify pairs of passengers who have traveled 
-  * on the same Teleport more than three times.
+/** Problem: Identify pairs of passengers who have traveled on the same Teleport
+  * more than three times.
   *
   * ==Self question:==
   *   - Do we need to display all possible passengerId permutation?
@@ -44,12 +44,16 @@ object Question4 {
     *   TeleportTiny.
     */
   private def TeleportToTeleportTiny(Teleport: Teleport): TeleportTiny = {
-    TeleportTiny(teleportId = Teleport.teleportId, passengerId = Teleport.passengerId)
+    TeleportTiny(
+      teleportId = Teleport.teleportId,
+      passengerId = Teleport.passengerId
+    )
   }
 
   def question4(outputDir: String, Teleports: List[Teleport]): Unit = {
     // Minimize the memory footprint as we are going to do some heavy cartesian join for each teleportId.
-    val TeleportsTiny = Teleports.map(Teleport => TeleportToTeleportTiny(Teleport))
+    val TeleportsTiny =
+      Teleports.map(Teleport => TeleportToTeleportTiny(Teleport))
     // Group the Teleports by the teleportId.
     val groupedData: Map[Int, List[TeleportTiny]] =
       TeleportsTiny.groupBy(_.teleportId)

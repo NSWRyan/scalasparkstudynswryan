@@ -19,10 +19,11 @@ class Question3SparkTest extends AnyFunSuite with DataFrameSuiteBase {
     import spark.implicits._
 
     // Mock input file paths
-    val sparkTestDirBase       = "/tmp/spark_test"
-    val teleportFileNameFullPath = f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
-    val outputDirFullPath      = f"${sparkTestDirBase}/tmp/test-output"
-    val outputDirectory        = new Directory(new File(sparkTestDirBase))
+    val sparkTestDirBase = "/tmp/spark_test"
+    val teleportFileNameFullPath =
+      f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
+    val outputDirFullPath = f"${sparkTestDirBase}/tmp/test-output"
+    val outputDirectory = new Directory(new File(sparkTestDirBase))
     outputDirectory.deleteRecursively()
     // Sample Teleport data
     val teleportData = Seq(
@@ -61,7 +62,7 @@ class Question3SparkTest extends AnyFunSuite with DataFrameSuiteBase {
     // Expected data
     val expectedData = Seq(
       Row("1", "3"), // Longest run excluding ZZ: us -> ca -> me
-      Row("2", "4")  // Longest run: us -> br -> ar -> ch
+      Row("2", "4") // Longest run: us -> br -> ar -> ch
     )
 
     val expectedDF = spark.createDataFrame(

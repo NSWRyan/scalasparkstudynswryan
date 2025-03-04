@@ -12,17 +12,18 @@ import scala.reflect.io.Directory
 class Question4SparkTest extends AnyFunSuite with DataFrameSuiteBase {
 
   test(
-    "question4SparkAnswer should correctly count pairs of passengers who have flown together more than 3 times"
+    "question4SparkAnswer should correctly count pairs of passengers who have teleported together more than 3 times"
   ) {
     val spark = sparkSession
 
     import spark.implicits._
 
     // Mock input file paths
-    val sparkTestDirBase       = "/tmp/spark_test"
-    val teleportFileNameFullPath = f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
-    val outputDirFullPath      = f"${sparkTestDirBase}/tmp/test-output"
-    val outputDirectory        = new Directory(new File(sparkTestDirBase))
+    val sparkTestDirBase = "/tmp/spark_test"
+    val teleportFileNameFullPath =
+      f"${sparkTestDirBase}/tmp/test-Teleport-data.csv"
+    val outputDirFullPath = f"${sparkTestDirBase}/tmp/test-output"
+    val outputDirectory = new Directory(new File(sparkTestDirBase))
     outputDirectory.deleteRecursively()
 
     // Sample Teleport data
@@ -62,7 +63,11 @@ class Question4SparkTest extends AnyFunSuite with DataFrameSuiteBase {
     val result: DataFrame = spark.read
       .option("header", "true")
       .csv(s"file:///$outputDirFullPath/Question4Spark.csv")
-      .select("Passenger 1 ID", "Passenger 2 ID", "Number of Teleports together")
+      .select(
+        "Passenger 1 ID",
+        "Passenger 2 ID",
+        "Number of Teleports together"
+      )
 
     // Expected data
     val expectedData = Seq(

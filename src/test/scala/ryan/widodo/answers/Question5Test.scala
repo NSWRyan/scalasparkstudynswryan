@@ -31,10 +31,10 @@ class Question5Test
   }
 
   test(
-    "flownTogether should correctly calculate the number of Teleports together and write to CSV"
+    "teleportedTogether should correctly calculate the number of Teleports together and write to CSV"
   ) {
     val fromDate = Utils.parseDate("2024-01-01")
-    val toDate   = Utils.parseDate("2024-01-06")
+    val toDate = Utils.parseDate("2024-01-06")
 
     val Teleports = List(
       Teleport(1, 100, "", "", Utils.parseDate("2024-01-01")),
@@ -65,7 +65,7 @@ class Question5Test
     )
 
     // Execute the function
-    Question5.flownTogether(tempDir, Teleports, 4, fromDate, toDate)
+    Question5.teleportedTogether(tempDir, Teleports, 4, fromDate, toDate)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question5.csv")
@@ -73,7 +73,7 @@ class Question5Test
 
     // Read the output CSV file and validate the content
     val reader = CSVReader.open(outputPath.toFile)
-    val rows   = reader.all()
+    val rows = reader.all()
 
     // Expected data
     val expectedHeader = List(

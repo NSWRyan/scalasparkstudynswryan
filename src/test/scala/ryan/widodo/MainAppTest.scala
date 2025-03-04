@@ -8,8 +8,8 @@ import java.io.{ByteArrayOutputStream, PrintStream}
 import java.nio.file.{Files, Paths}
 class MainAppTest extends AnyFunSuite with BeforeAndAfter {
   // Create a temporary directory for testing
-  var tempDir: String           = _
-  var tempTeleportFile: String    = _
+  var tempDir: String = _
+  var tempTeleportFile: String = _
   var tempPassengerFile: String = _
 
   before {
@@ -52,7 +52,7 @@ class MainAppTest extends AnyFunSuite with BeforeAndAfter {
     "main should exit with usage message if insufficient arguments are provided"
   ) {
     val originalSecurityManager: SecurityManager = System.getSecurityManager
-    val originalConsoleOut: PrintStream          = Console.out
+    val originalConsoleOut: PrintStream = Console.out
 
     System.setSecurityManager(new NoExitSecurityManager)
 

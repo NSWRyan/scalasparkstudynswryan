@@ -129,10 +129,10 @@ rm -rf jdk-8u421-linux-x64.tar.gz
 curl -fL https://github.com/coursier/coursier/releases/latest/download/cs-x86_64-pc-linux.gz | gzip -d > cs && chmod +x cs && ./cs setup
 # Check sbt
 sbt -version
-cs install scala:2.12.10
+cs install scala:2.12.20
 # Check scala version
 scala -version
-# Scala code runner version 2.12.10 -- Copyright 2002-2019, LAMP/EPFL and Lightbend, Inc.
+# Scala code runner version 2.12.20 -- Copyright 2002-2019, LAMP/EPFL and Lightbend, Inc.
 ```
 
 ### Install Hadoop 3.4.0
@@ -325,6 +325,6 @@ spark-submit --master local[10] \
 sbt test
 # Run one test class
 TEST_CLASS="ryan.widodo.spark.Question4SparkTest"
-sbt "test:testOnly TEST_CLASS"
+sbt "test:testOnly $TEST_CLASS"
 ```
 * I tried to cover all edge cases, but there might be some that I missed.

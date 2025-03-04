@@ -71,7 +71,7 @@ class UtilsTest extends AnyFunSuite {
     "parseDate should return default date (1970-01-01) when null is provided"
   ) {
     val defaultLocalDate = LocalDate.parse("1970-01-01")
-    val defaultDate      = Date.valueOf(defaultLocalDate)
+    val defaultDate = Date.valueOf(defaultLocalDate)
     assert(Utils.parseDate(null) == defaultDate)
   }
 
