@@ -41,7 +41,7 @@ object Question1Spark {
     * @param count
     *   Int
     */
-  private case class Teleportsummary(month: Int, count: Int)
+  case class TeleportSummary(month: Int, count: Int)
 
   /** Case Class helper for storing a tinier Teleport data necessary for this
     * calculation..
@@ -51,7 +51,7 @@ object Question1Spark {
     * @param month
     *   Int, the month of the Teleport from date.
     */
-  private case class TeleportLite(teleportId: Int, month: Int)
+  case class TeleportLite(teleportId: Int, month: Int)
 
   /** Generate the number of Teleports for each month using dataset.
     *
@@ -76,27 +76,28 @@ object Question1Spark {
 
     // Load the data and
     // parse from string to the appropriate types.
-    val TeleportLiteDS: Dataset[TeleportLite] =
+    val teleportLiteDS: Dataset[TeleportLite] =
       spark.read
         .option("header", "true")
         .format("csv")
         .load(f"file://${teleportFileNameFullPath}")
         .withColumn("teleportId", toInt(col("teleportId")))
         .withColumn("month", toMonth(toDate(col("date"))))
+        .drop("passengerId", "from", "to", "date")
         .as[TeleportLite]
 
     // Group by month and count distinct teleportId
-    val groupByCountDistinctteleportIdDS: Dataset[Teleportsummary] =
-      TeleportLiteDS
+    val groupByCountDistinctteleportIdDS: Dataset[TeleportSummary] =
+      teleportLiteDS
         .groupByKey(_.month)
-        .mapGroups { case (month, iter) =>
-          val teleportIds = iter.map(_.teleportId).toSet
-          Teleportsummary(month, teleportIds.size)
+        .mapGroups { (month: Int, iter: Iterator[TeleportLite]) =>
+          val count: Int = iter.map(_.teleportId).toSet.size
+          TeleportSummary(month, count)
         }
 
     // Merge the partition into 1 and Write the dataset
     groupByCountDistinctteleportIdDS
-      .repartition(1) // Just to make the CSV readable.
+      .coalesce(1) // Just to make the CSV readable.
       .sortWithinPartitions(asc("month"))
       .withColumnRenamed("month", "Month")
       .withColumnRenamed("count", "Number of Teleports")

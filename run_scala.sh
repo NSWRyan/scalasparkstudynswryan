@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf outputs
 sbt clean test assembly
-APP_JAR=$(ls target/scala-2.12/*.jar | head -n 1)
+APP_JAR=$(ls target/scala-2.13/*.jar | head -n 1)
 
 scala -J-Xmx2g \
   -classpath "${APP_JAR}" \

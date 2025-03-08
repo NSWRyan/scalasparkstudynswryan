@@ -45,7 +45,7 @@ object Question2Spark {
     * @param numberOfTeleports
     *   BigInt, the number of Teleports for this passengerId.
     */
-  private case class TeleportFrequency(
+  case class TeleportFrequency(
       passengerId: Int,
       numberOfTeleports: BigInt
   )
@@ -57,7 +57,7 @@ object Question2Spark {
     * @param teleportId
     *   Int, the Teleport ID.
     */
-  private case class TeleportLite(passengerId: Int, teleportId: BigInt)
+  case class TeleportLite(passengerId: Int, teleportId: BigInt)
 
   /** Helper case class for Teleport frequency dataset,
     *
@@ -70,7 +70,7 @@ object Question2Spark {
     * @param lastName
     *   String, passenger last name.
     */
-  private case class PassengerTeleportDetail(
+  case class PassengerTeleportDetail(
       passengerId: Int,
       numberOfTeleports: BigInt,
       firstName: String,
@@ -100,7 +100,7 @@ object Question2Spark {
     val toInt = udf[Int, String](Utils.parseInt)
 
     // Load the data
-    val TeleportDS: Dataset[TeleportLite] =
+    val teleportDS: Dataset[TeleportLite] =
       spark.read
         .option("header", "true")
         .format("csv")
@@ -113,17 +113,15 @@ object Question2Spark {
     // Then group by passengerId to count the number of Teleports
     // Also sort to make the sort-merge more efficient at join.
     val top100PassengerTeleportFrequencyDS: Dataset[TeleportFrequency] =
-      TeleportDS
+      teleportDS
         .groupByKey(_.passengerId)
-        .mapGroups { case (passengerId, iter) =>
+        .mapGroups { (passengerId: Int, iter: Iterator[TeleportLite]) =>
           val teleportIds = iter.map(_.teleportId).toSet
           TeleportFrequency(passengerId, teleportIds.size)
         }
         .sort(desc("numberOfTeleports"))
         .limit(100)
         .as[TeleportFrequency]
-        .repartition(col("passengerId"))
-        .sortWithinPartitions("passengerId")
 
     // Retrieve the passenger data
     val passengerDS: Dataset[Passenger] =
@@ -133,8 +131,6 @@ object Question2Spark {
         .load(f"file://${passengersDataCSVFullPath}")
         .withColumn("passengerId", toInt(col("passengerId")))
         .as[Passenger]
-        .repartition(col("passengerId"))
-        .sortWithinPartitions("passengerId")
 
     // Inner join
     val joinedDS: Dataset[PassengerTeleportDetail] =
@@ -149,7 +145,7 @@ object Question2Spark {
 
     // Merge the partition into 1 and Write the dataframe
     joinedDS
-      .repartition(1)
+      .coalesce(1)
       .sortWithinPartitions(desc("numberOfTeleports"), asc("passengerId"))
       .withColumnRenamed("passengerId", "Passenger ID")
       .withColumnRenamed("numberOfTeleports", "Number of Teleports")

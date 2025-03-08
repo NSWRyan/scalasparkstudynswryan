@@ -25,7 +25,7 @@ object Question2 {
   private def getPassengerTeleportsCount(
       Teleports: List[Teleport]
   ): Map[Int, Int] = {
-    Teleports.groupBy(Teleport => Teleport.passengerId).mapValues(_.size)
+    Teleports.groupBy(Teleport => Teleport.passengerId).mapValues(_.size).toMap
   }
 
   /** Create 100 most frequent fliers csv.

@@ -28,10 +28,10 @@ object PassengerDataReader {
     */
   def readPassengers(filePath: String): List[Passenger] = {
     val reader = CSVReader.open(filePath)
-    val Teleports = reader.allWithHeaders().map { row =>
+    val teleports = reader.allWithHeaders().map { row =>
       parsePassenger(row)
     }
     reader.close()
-    Teleports
+    teleports
   }
 }

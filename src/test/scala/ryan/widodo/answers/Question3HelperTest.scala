@@ -20,7 +20,7 @@ class Question3HelperTest extends AnyFunSuite {
   test(
     "countriesChain should return the correct chain of countries for a list of Teleports"
   ) {
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1, "us", "zz", Utils.parseDate("2023-07-10")),
       Teleport(2, 2, "zz", "ge", Utils.parseDate("2023-07-11")),
       Teleport(3, 3, "ge", "fr", Utils.parseDate("2023-07-12")),
@@ -28,31 +28,31 @@ class Question3HelperTest extends AnyFunSuite {
     )
 
     val expected = List("us", "zz", "ge", "fr", "sp")
-    assert(Question3Helper.countriesChain(Teleports) === expected)
+    assert(Question3Helper.countriesChain(teleports) === expected)
   }
 
   test(
     "countriesChain should handle Teleports with the same from and to countries correctly"
   ) {
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1, "us", "zz", Utils.parseDate("2023-07-10")),
       Teleport(2, 2, "zz", "zz", Utils.parseDate("2023-07-11")),
       Teleport(3, 3, "zz", "ge", Utils.parseDate("2023-07-12"))
     )
 
     val expected = List("us", "zz", "ge")
-    assert(Question3Helper.countriesChain(Teleports) === expected)
+    assert(Question3Helper.countriesChain(teleports) === expected)
   }
 
   test("countriesChain should sort the Teleports by date before processing") {
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 2, "zz", "ge", Utils.parseDate("2023-07-12")),
       Teleport(2, 1, "us", "zz", Utils.parseDate("2023-07-10")),
       Teleport(3, 3, "ge", "fr", Utils.parseDate("2023-07-14"))
     )
 
     val expected = List("us", "zz", "ge", "fr")
-    assert(Question3Helper.countriesChain(Teleports) === expected)
+    assert(Question3Helper.countriesChain(teleports) === expected)
   }
 
   test("longestRunNoZZ should return 0 for an empty list") {

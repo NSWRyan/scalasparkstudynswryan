@@ -36,7 +36,7 @@ class Question5Test
     val fromDate = Utils.parseDate("2024-01-01")
     val toDate = Utils.parseDate("2024-01-06")
 
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 100, "", "", Utils.parseDate("2024-01-01")),
       Teleport(1, 101, "", "", Utils.parseDate("2024-01-02")),
       Teleport(1, 102, "", "", Utils.parseDate("2024-01-03")),
@@ -65,7 +65,7 @@ class Question5Test
     )
 
     // Execute the function
-    Question5.teleportedTogether(tempDir, Teleports, 4, fromDate, toDate)
+    Question5.teleportedTogether(tempDir, teleports, 4, fromDate, toDate)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question5.csv")

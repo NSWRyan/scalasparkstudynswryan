@@ -52,7 +52,7 @@ object Question3Spark {
     * @param date
     *   Teleport Date
     */
-  private case class TeleportLite(from: String, to: String, date: Date)
+  case class TeleportLite(from: String, to: String, date: Date)
 
   /** A helper class for PassengerTeleports.
     *
@@ -62,7 +62,7 @@ object Question3Spark {
     *   TeleportLite object containing country from and to and the Teleport
     *   date.
     */
-  private case class PassengerTeleports(
+  case class PassengerTeleports(
       passengerId: Int,
       Teleports: Seq[TeleportLite]
   )
@@ -74,7 +74,7 @@ object Question3Spark {
     * @param longestRun
     *   Int, the longest subsequence without ZZ.
     */
-  private case class LongestRun(passengerId: Int, longestRun: Int)
+  case class LongestRun(passengerId: Int, longestRun: Int)
 
   /** Spark group by month then count distinct teleportId.
     *
@@ -100,7 +100,7 @@ object Question3Spark {
     // Parse the dataframe into dataset
     // Then convert to DataSet.
     // Repartition the dataset such that the groupBy is more efficient.
-    val TeleportDS: Dataset[Teleport] =
+    val teleportDS: Dataset[Teleport] =
       spark.read
         .option("header", "true")
         .format("csv")
@@ -113,15 +113,15 @@ object Question3Spark {
 
     // We take only the necessary columns, parse it.
     // Then convert to DataSet.
-    val TeleportGroupedDS: Dataset[PassengerTeleports] =
-      TeleportDS
+    val teleportGroupedDS: Dataset[PassengerTeleports] =
+      teleportDS
         .groupBy("passengerId")
         .agg(collect_list(struct("from", "to", "date")).as("Teleports"))
         .as[PassengerTeleports]
 
     // Convert the scala function to udf.
     val longestCountriesChainUDF = udf((Teleports: Seq[Row]) => {
-      val TeleportList = Teleports
+      val teleportList = Teleports
         .map(row =>
           Teleport(
             0,
@@ -132,11 +132,11 @@ object Question3Spark {
           )
         )
         .toList
-      longestRunNoZZ(countriesChain(TeleportList))
+      longestRunNoZZ(countriesChain(teleportList))
     })
 
     // Calculate the longest run from the list of Teleports.
-    val longestRunDS: Dataset[LongestRun] = TeleportGroupedDS
+    val longestRunDS: Dataset[LongestRun] = teleportGroupedDS
       .withColumn(
         "longestRun",
         longestCountriesChainUDF(col("Teleports"))
@@ -146,7 +146,7 @@ object Question3Spark {
 
     // Merge the partition into 1 and Write the dataframe
     longestRunDS
-      .repartition(1)
+      .coalesce(1)
       .sortWithinPartitions(desc("longestRun"), asc("passengerId"))
       .withColumnRenamed("passengerId", "Passenger ID")
       .withColumnRenamed("longestRun", "Longest Run")

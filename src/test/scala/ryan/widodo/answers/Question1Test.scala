@@ -26,7 +26,7 @@ class Question1Test extends AnyFunSuite with BeforeAndAfter {
   test(
     "question1 should correctly count and sort Teleports by month and write to CSV"
   ) {
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1001, "id", "us", Utils.parseDate("2024-01-15")),
       Teleport(2, 1002, "us", "zz", Utils.parseDate("2024-01-20")),
       Teleport(3, 1003, "id", "us", Utils.parseDate("2024-02-10")),
@@ -36,7 +36,7 @@ class Question1Test extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Execute the function
-    Question1.question1(tempDir, Teleports)
+    Question1.question1(tempDir, teleports)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question1.csv")

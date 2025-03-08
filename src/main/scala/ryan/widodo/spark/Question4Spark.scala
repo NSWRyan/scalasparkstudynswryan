@@ -46,7 +46,7 @@ object Question4Spark {
     * @param passengerId
     *   Int, the Passenger ID.
     */
-  private case class TeleportParsed(teleportId: Int, passengerId: Int)
+  case class TeleportParsed(teleportId: Int, passengerId: Int)
 
   /** A case class to hold the passenger pairs.
     *
@@ -56,7 +56,7 @@ object Question4Spark {
     *   Int, the Passenger ID for the first passenger, the second passenger's ID
     *   is always bigger than the first passenger's ID.
     */
-  private case class PassengerPair(passengerId1: Int, passengerId2: Int)
+  case class PassengerPair(passengerId1: Int, passengerId2: Int)
 
   /** A case class to hold the passenger pairs group by count result.
     *
@@ -68,7 +68,7 @@ object Question4Spark {
     * @param count
     *   The count for this passenger pair.
     */
-  private case class PassengerPairCount(
+  case class PassengerPairCount(
       passengerId1: Int,
       passengerId2: Int,
       count: BigInt
@@ -95,7 +95,7 @@ object Question4Spark {
 
     // Load the data into dataset
 
-    val TeleportParsedDS: Dataset[TeleportParsed] =
+    val teleportParsedDS: Dataset[TeleportParsed] =
       spark.read
         .option("header", "true")
         .format("csv")
@@ -108,7 +108,7 @@ object Question4Spark {
 
     // Then group by passengerId to count the number of Teleports
     val passengerPairsDS: Dataset[Seq[Int]] =
-      TeleportParsedDS
+      teleportParsedDS
         .groupBy(col("teleportId"))
         .agg(collect_list("passengerId").as("passengerIds"))
         .drop("teleportId")
@@ -143,7 +143,7 @@ object Question4Spark {
 
     // Merge the partition into 1 and Write the dataframe
     coupleCountsMoreThan3DS
-      .repartition(1)
+      .coalesce(1)
       .sortWithinPartitions(
         desc("count"),
         asc("passengerId1"),

@@ -65,7 +65,7 @@ object Question5Spark {
     * @param date
     *   Date, the Teleport date.
     */
-  private case class TeleportParsed(
+  case class TeleportParsed(
       teleportId: Int,
       passengerId: Int,
       date: Date
@@ -78,7 +78,7 @@ object Question5Spark {
     * @param passengerIds
     *   Seq[Int], the Sequence of Passenger ID for a Teleport ID.
     */
-  private case class PassengersTeleportDate(
+  case class PassengersTeleportDate(
       date: Date,
       passengerIds: Seq[Int]
   )
@@ -93,7 +93,7 @@ object Question5Spark {
     * @param date
     *   Date, the Teleport date for this pair.
     */
-  private case class PassengerPair(
+  case class PassengerPair(
       passengerId1: Int,
       passengerId2: Int,
       date: Date
@@ -147,7 +147,7 @@ object Question5Spark {
     val toDate = udf[Date, String](Utils.parseDate)
 
     // Load the data into dataset
-    val TeleportParsedDS: Dataset[TeleportParsed] =
+    val teleportParsedDS: Dataset[TeleportParsed] =
       spark.read
         .option("header", "true")
         .format("csv")
@@ -162,7 +162,7 @@ object Question5Spark {
 
     // Then group by passengerId to count the number of Teleports
     val passengerPairsDS: Dataset[PassengersTeleportDate] =
-      TeleportParsedDS
+      teleportParsedDS
         .groupBy(col("teleportId"), col("date"))
         .agg(collect_list("passengerId").as("passengerIds"))
         .drop("teleportId")
@@ -205,7 +205,7 @@ object Question5Spark {
 
     // Merge the partition into 1 and Write the dataframe
     coupleCountsMoreThanNTimesDS
-      .repartition(1)
+      .coalesce(1)
       .sortWithinPartitions(
         desc("count"),
         asc("passengerId1"),

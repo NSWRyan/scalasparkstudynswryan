@@ -27,7 +27,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
     "question2Outer should correctly join Teleport counts with passenger details and write to CSV"
   ) {
     val defaultDate = Date.valueOf("2010-01-01")
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1001, "us", "zz", defaultDate),
       Teleport(1, 1002, "us", "zz", defaultDate),
       Teleport(1, 1003, "us", "zz", defaultDate),
@@ -46,7 +46,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Execute the function
-    Question2.question2Outer(tempDir, Teleports, passengers)
+    Question2.question2Outer(tempDir, teleports, passengers)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question2Outer.csv")
@@ -78,7 +78,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
     "question2Inner should correctly join Teleport counts with passenger details and write to CSV"
   ) {
     val defaultDate = Date.valueOf("2010-01-01")
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1001, "us", "zz", defaultDate),
       Teleport(1, 1002, "us", "zz", defaultDate),
       Teleport(1, 1003, "us", "zz", defaultDate),
@@ -98,7 +98,7 @@ class Question2Test extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Execute the function
-    Question2.question2Inner(tempDir, Teleports, passengers)
+    Question2.question2Inner(tempDir, teleports, passengers)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question2Inner.csv")
