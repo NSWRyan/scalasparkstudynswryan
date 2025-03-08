@@ -31,9 +31,9 @@ class MainAppTest extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Write sample CSV data
-    val TeleportWriter: CSVWriter = CSVWriter.open(tempTeleportFile)
-    TeleportWriter.writeAll(teleportsData)
-    TeleportWriter.close()
+    val teleportWriter: CSVWriter = CSVWriter.open(tempTeleportFile)
+    teleportWriter.writeAll(teleportsData)
+    teleportWriter.close()
 
     val passengerWriter: CSVWriter = CSVWriter.open(tempPassengerFile)
     passengerWriter.writeAll(passengersData)

@@ -31,7 +31,7 @@ class Question4Test
 
   test("question4 should create a CSV with correct pairings and counts") {
     val dummyDate = Date.valueOf("2010-01-01")
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 100, "", "", dummyDate),
       Teleport(1, 101, "", "", dummyDate),
       Teleport(1, 102, "", "", dummyDate),
@@ -54,7 +54,7 @@ class Question4Test
     )
 
     // Execute the function
-    Question4.question4(tempDir, Teleports)
+    Question4.question4(tempDir, teleports)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question4.csv")

@@ -64,9 +64,9 @@ class TeleportDataReaderTest extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Execute the function
-    val Teleports = teleportDataReader.readTeleports(tempFile)
+    val teleports = teleportDataReader.readTeleports(tempFile)
 
     // Validate the parsed Teleport objects
-    assert(Teleports == expectedTeleports)
+    assert(teleports == expectedTeleports)
   }
 }

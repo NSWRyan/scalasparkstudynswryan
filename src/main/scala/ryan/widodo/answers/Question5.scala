@@ -76,17 +76,17 @@ object Question5 {
       to: Date
   ): Unit = {
     // Minimize the memory footprint as we are going to do some heavy cartesian join for each teleportId.
-    val TeleportTinyWithDateList = Teleports.map(TeleportToTeleportTinyWithDate)
+    val teleportTinyWithDateList = Teleports.map(TeleportToTeleportTinyWithDate)
 
     // Filter the Teleport data based on the range.
-    val TeleportsFiltered: List[TeleportTinyWithDate] =
-      TeleportTinyWithDateList
+    val teleportsFiltered: List[TeleportTinyWithDate] =
+      teleportTinyWithDateList
         .filter(_.date.compareTo(from) >= 0)
         .filter(_.date.compareTo(to) <= 0)
 
     // Group the Teleports by the teleportId.
     val groupedData: Map[Int, List[TeleportTinyWithDate]] =
-      TeleportsFiltered.groupBy(_.teleportId)
+      teleportsFiltered.groupBy(_.teleportId)
 
     // Make a unique pair for all passengers in each teleportId.
     val passengerPairs: Iterable[(Int, Int, Date)] =

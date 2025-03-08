@@ -14,14 +14,15 @@ object Question1 {
     */
   def question1(outputDir: String, Teleports: List[Teleport]): Unit = {
     // Scala group by month
-    val TeleportsPerMonth: Map[Int, Int] =
+    val teleportsPerMonth: Map[Int, Int] =
       Teleports
         .groupBy(Teleport => Utils.getMonth(Teleport.date))
         // Convert the values to a set of teleportId then count.
         .mapValues(_.map(_.teleportId).toSet.size)
+        .toMap
     // Sort by month
     val sortedteleportCountsByMonth: Seq[(Int, Int)] =
-      TeleportsPerMonth.toSeq.sortBy(_._1)
+      teleportsPerMonth.toSeq.sortBy(_._1)
 
     // Write to a new CSV
     val writer: CSVWriter =

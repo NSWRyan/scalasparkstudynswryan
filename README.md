@@ -24,7 +24,7 @@
 1. [Setup (WSL)](#setup-wsl)
     - [Install Oracle JDK 1.8](#install-oracle-jdk-18)
     - [Install sbt and scala using coursier](#install-sbt-and-scala-using-coursier)
-    - [Install Spark 2.4.8](#install-spark-248)
+    - [Install Spark 3.3.2](#install-spark-248)
     - [Install Hadoop 3.4.0](#install-hadoop-340)
     - [Example snippet of the modified .bashrc](#example-snippet-of-the-modified-bashrc)
     - [Testing installation](#testing-installation)
@@ -152,17 +152,21 @@ echo 'export SPARK_DIST_CLASSPATH=$(hadoop classpath)' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Install spark 2.4.8
+### Install spark 3.3.2
 ```bash
-cd /tmp/
-# Download spark 2.4.8 with scala 2.12.
+pushd /tmp/
+# Download spark 3.3.2 with scala 2.13.
 # Note that we need to dl hadoop separately 
 # as it requires some library in Hadoop.
-wget https://archive.apache.org/dist/spark/spark-2.4.8/spark-2.4.8-bin-without-hadoop-scala-2.12.tgz
+wget https://archive.apache.org/dist/spark/spark-3.3.2/spark-3.3.2-bin-hadoop3-scala2.13.tgz
 # Extract it.
-tar -xzvf spark-2.4.8-bin-without-hadoop-scala-2.12.tgz
-# Move to /opt/spark
-sudo mv spark-2.4.8-bin-without-hadoop-scala-2.12 /opt/spark
+tar -xzvf spark-3.3.2-bin-hadoop3-scala2.13.tgz
+
+# Move to /opt/
+sudo mv spark-3.3.2-bin-hadoop3-scala2.13 /opt/spark-3.3.2_2.13
+
+# Shadow link it.
+sudo ln -s /opt/spark-3.3.2_2.13 /opt/spark
 
 # Add spark to ~/.bashrc
 echo 'export SPARK_HOME=/opt/spark' >> ~/.bashrc
@@ -172,6 +176,7 @@ echo 'export PATH=$PATH:$SPARK_HOME/bin' >> ~/.bashrc
 spark-shell
 
 # ctrl+c to quit shell
+popd
 ```
 
 #### Example snippet of the modified .bashrc
@@ -194,7 +199,7 @@ spark-shell
 
 ### Clean up
 ```bash
-rm -rf /tmp/spark-2.4.8-bin-without-hadoop-scala-2.12.tgz
+rm -rf /tmp/spark-3.3.2-bin-without-hadoop-scala-2.13.tgz
 rm -rf /tmp/hadoop-3.4.0.tar.gz
 ```
 

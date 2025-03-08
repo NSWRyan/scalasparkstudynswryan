@@ -26,7 +26,7 @@ class Question3Test extends AnyFunSuite with BeforeAndAfter {
   test(
     "question3 should correctly calculate the longest run of countries visited without ZZ and write to CSV"
   ) {
-    val Teleports = List(
+    val teleports = List(
       Teleport(1, 1001, "us", "ca", Utils.parseDate("2023-01-01")),
       Teleport(1, 1003, "fr", "zz", Utils.parseDate("2023-01-20")),
       Teleport(1, 1002, "ca", "fr", Utils.parseDate("2023-01-10")),
@@ -38,7 +38,7 @@ class Question3Test extends AnyFunSuite with BeforeAndAfter {
     )
 
     // Execute the function
-    Question3.question3(tempDir, Teleports)
+    Question3.question3(tempDir, teleports)
 
     // Check that the output CSV file exists
     val outputPath = Paths.get(tempDir, "question3.csv")
